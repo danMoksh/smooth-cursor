@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<schemalist>
+  <schema
+        id="org.gnome.shell.extensions.cursor-spark"
+        path="/org/gnome/shell/extensions/cursor-spark/"
+    >
+    <key name="spring-damping" type="i">
+      <default>45</default>
+      <summary>Spring Damping</summary>
+    </key>
+    <key name="spring-stiffness" type="i">
+      <default>400</default>
+      <summary>Spring Stiffness</summary>
+    </key>
+    <key name="spring-mass" type="i">
+      <default>1</default>
+      <summary>Spring Mass</summary>
+    </key>
+    <key name="rotate-on-move" type="b">
+      <default>true</default>
+      <summary>Rotate on Move</summary>
+    </key>
+    <key name="cursor-size" type="i">
+      <default>50</default>
+      <summary>Cursor Size</summary>
+    </key>
+    <key name="spark-color" type="s">
+      <default>"#ffffff"</default>
+      <summary>Spark Color</summary>
+    </key>
+    <key name="spark-size" type="i">
+      <default>25</default>
+      <summary>Spark Size</summary>
+    </key>
+    <key name="spark-radius" type="i">
+      <default>45</default>
+      <summary>Spark Radius</summary>
+    </key>
+    <key name="spark-count" type="i">
+      <default>8</default>
+      <summary>Spark Count</summary>
+    </key>
+    <key name="spark-duration" type="i">
+      <default>400</default>
+      <summary>Spark Duration</summary>
+    </key>
+    <key name="extra-scale" type="d">
+      <default>1.0</default>
+      <summary>Extra Scale</summary>
+    </key>
+    <key name="custom-cursor-path" type="s">
+      <default>""</default>
+      <summary>Custom Cursor Image Path</summary>
+    </key>
+  </schema>
+</schemalist>
