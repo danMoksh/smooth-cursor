@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <schemalist>
   <schema
-        id="org.gnome.shell.extensions.cursor-spark"
-        path="/org/gnome/shell/extensions/cursor-spark/"
+        id="org.gnome.shell.extensions.smooth-cursor"
+        path="/org/gnome/shell/extensions/smooth-cursor/"
     >
     <key name="spring-damping" type="i">
       <default>45</default>
@@ -33,7 +33,7 @@
       <summary>Rotate on Move</summary>
     </key>
     <key name="rotate-reset-on-stop" type="b">
-      <default>true</default>
+      <default>false</default>
       <summary>Reset Rotation on Stop</summary>
     </key>
     <key name="rotation-sensitivity" type="d">
@@ -71,6 +71,10 @@
     <key name="custom-cursor-path" type="s">
       <default>""</default>
       <summary>Custom Cursor Image Path</summary>
+    </key>
+    <key name="saved-cursor-theme" type="s">
+      <default>""</default>
+      <summary>Saved System Cursor Theme</summary>
     </key>
   </schema>
 </schemalist>

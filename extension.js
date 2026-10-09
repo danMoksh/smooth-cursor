@@ -34,6 +34,13 @@ export default class SmoothCursorExtension extends Extension {
     // Only save original if it's not already adwaita-invisible (e.g. extension was restarted)
     if (this._originalCursorTheme !== 'adwaita-invisible') {
       this._savedCursorTheme = this._originalCursorTheme;
+      this._settings.set_string('saved-cursor-theme', this._savedCursorTheme);
+    } else {
+      // It was invisible at startup (e.g., from a logout/restart), so fetch the last known real theme
+      this._savedCursorTheme = this._settings.get_string('saved-cursor-theme');
+      if (!this._savedCursorTheme || this._savedCursorTheme === 'adwaita-invisible') {
+        this._savedCursorTheme = 'Adwaita'; // Safe fallback
+      }
     }
     
     this._interfaceSettings.set_string('cursor-theme', 'adwaita-invisible');
