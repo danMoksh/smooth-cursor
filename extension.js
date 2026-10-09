@@ -128,6 +128,8 @@ export default class SmoothCursorExtension extends Extension {
     this._lastUpdateTime = GLib.get_monotonic_time() / 1000;
     this._previousAngle = 0;
     this._accumulatedRotation = 0;
+    this._smoothedVx = 0;
+    this._smoothedVy = 0;
     this._scaleTimeoutId = null;
     this._rotationTimeoutId = null;
 
@@ -201,14 +203,21 @@ export default class SmoothCursorExtension extends Extension {
         const vx = (x - this._lastMousePos.x) / deltaTime;
         const vy = (y - this._lastMousePos.y) / deltaTime;
         
+        // Exponential moving average for velocity smoothing
+        const alpha = 0.15; // Lower is smoother
+        this._smoothedVx = this._smoothedVx * (1 - alpha) + vx * alpha;
+        this._smoothedVy = this._smoothedVy * (1 - alpha) + vy * alpha;
+        
         const speed = Math.sqrt(vx * vx + vy * vy);
+        const smoothedSpeed = Math.sqrt(this._smoothedVx * this._smoothedVx + this._smoothedVy * this._smoothedVy);
         
         this._cursorX.set(x);
         this._cursorY.set(y);
 
         if (this._rotateOnMove) {
-          if (speed > 0.1) {
-            const currentAngle = Math.atan2(vy, vx) * (180 / Math.PI) + 90;
+          // Use smoothedSpeed threshold and smoothed velocity vector to calculate angle
+          if (smoothedSpeed > 40) {
+            const currentAngle = Math.atan2(this._smoothedVy, this._smoothedVx) * (180 / Math.PI) + 90;
             
             // Fix: Use modulo 360 to prevent wild spinning if previousAngle is very large
             let angleDiff = (currentAngle - this._previousAngle) % 360;
