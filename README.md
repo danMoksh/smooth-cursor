@@ -79,9 +79,11 @@ Settings are organized as a style: a set of defaults plus optional overrides tha
 
 ## Limitations and workarounds
 
-Wayland prevents extensions from dynamically reading the current cursor shape (like the I-beam text selector). Because the extension replaces the cursor entirely, it cannot automatically change to a text selector when hovering over text.
+Wayland prevents extensions from dynamically reading the current cursor shape (such as the I-beam text selector). Because the extension replaces the cursor entirely, it cannot automatically change shapes when hovering over text.
 
-To maintain a responsive, tactile feel despite this limitation, the extension implements the physical "shrink and bounce" click effect. This ensures every interaction feels immediate and physical, even without dynamic shape-shifting.
+To maintain a highly responsive feel despite this limitation, the extension uses a tactile workaround: **whenever you click, drag, or write, the cursor physically shrinks and bounces.** This tiny bit of interaction ensures the pointer always feels alive and responsive to your actions, even without dynamic shape-shifting.
+
+<video src="assets/text-highlighting.mp4" autoplay loop muted playsinline width="100%"></video>
 
 ## Translations and development
 
