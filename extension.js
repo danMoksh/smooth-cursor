@@ -108,11 +108,15 @@ export default class SmoothCursorExtension extends Extension {
     
     this._rotateOnMove = this._settings.get_boolean('rotate-on-move');
     this._rotateResetOnStop = this._settings.get_boolean('rotate-reset-on-stop');
+    this._rotationSensitivity = this._settings.get_double('rotation-sensitivity');
     this._settingsSignalIds.push(this._settings.connect('changed::rotate-on-move', () => {
         this._rotateOnMove = this._settings.get_boolean('rotate-on-move');
     }));
     this._settingsSignalIds.push(this._settings.connect('changed::rotate-reset-on-stop', () => {
         this._rotateResetOnStop = this._settings.get_boolean('rotate-reset-on-stop');
+    }));
+    this._settingsSignalIds.push(this._settings.connect('changed::rotation-sensitivity', () => {
+        this._rotationSensitivity = this._settings.get_double('rotation-sensitivity');
     }));
 
     const updateBouncePhysics = () => {
@@ -221,7 +225,7 @@ export default class SmoothCursorExtension extends Extension {
         this._cursorY.set(y);
 
         if (this._rotateOnMove) {
-          if (speed > 0.15) { // Ignore micro-jitters
+          if (speed > this._rotationSensitivity) { // Ignore micro-jitters
             const currentAngle = Math.atan2(vy, vx) * (180 / Math.PI) + 90;
             
             // Fix: Use modulo 360 to prevent wild spinning if previousAngle is very large
@@ -259,7 +263,7 @@ export default class SmoothCursorExtension extends Extension {
           this._previousAngle = 0;
         }
 
-        if (speed > 0.15) { // Ignore micro-jitters
+        if (speed > this._rotationSensitivity) { // Ignore micro-jitters
           if (!this._isMouseDown) {
             this._scale.set(0.95);
             
