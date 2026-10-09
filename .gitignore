@@ -1,5 +1,5 @@
 # Build artifacts
-cursor-spark.zip
+smooth-cursor.zip
 
 # Editor
 *~
@@ -22,3 +22,9 @@ docs/
 export_conversations.py
 patch_*.js
 test-*.js
+
+# AI Agents & Video Projects
+.agents/
+skills/
+skills-lock.json
+conversation_export.jsonl
