@@ -54,9 +54,15 @@ info "Compiling translations..."
 # Swap into the install location
 TARGET_DIR="$HOME/.local/share/gnome-shell/extensions/$UUID"
 info "Installing to: $TARGET_DIR"
-mkdir -p "$(dirname "$TARGET_DIR")"
-rm -rf "$TARGET_DIR"
-mv "$TMP_DIR/src" "$TARGET_DIR"
+mkdir -p "$TARGET_DIR"
+rm -rf "${TARGET_DIR:?}/"*
+
+# Only copy necessary extension files, not the whole git repository
+for item in extension.js metadata.json prefs.js spring.js cursor.svg LICENSE README.md doc schemas adwaita-invisible locale; do
+  if [ -e "$TMP_DIR/src/$item" ]; then
+    cp -r "$TMP_DIR/src/$item" "$TARGET_DIR/"
+  fi
+done
 
 # Try to enable it (a fresh install may require reloading the shell first)
 if command -v gnome-extensions >/dev/null 2>&1; then
