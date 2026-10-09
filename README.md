@@ -69,6 +69,20 @@ After installation, you must restart GNOME Shell to see the extension in your Ex
 
 Open the GNOME Extensions app (or Extension Manager), find "Smooth Cursor", and click the settings gear. From there, you can configure the spring physics, mass, bounce damping, click sparks, and rotation sensitivity to tune it exactly to your liking.
 
+### Custom styles and colors
+
+Settings are organized as a style: a set of defaults plus optional overrides that apply only while the system uses a dark style.
+
+- The preferences dialog shows a grid of preset styles; each preview renders the trail on light (top) and dark (bottom) backgrounds.
+- **Customize…** opens the detailed editor: a Default/Dark toggle switches which state you are editing; in Dark mode each row has an icon-only revert button to drop the override and fall back to the default state.
+- **Customize…** while a preset is active creates a new custom style derived from it (you can create as many as you like, each with its own card); while a custom style is active it edits that style in place. The editor has a Delete button at the bottom that removes the style and falls back to the first preset.
+
+## Limitations and workarounds
+
+Wayland prevents extensions from dynamically reading the current cursor shape (like the I-beam text selector). Because the extension replaces the cursor entirely, it cannot automatically change to a text selector when hovering over text.
+
+To maintain a responsive, tactile feel despite this limitation, the extension implements the physical "shrink and bounce" click effect. This ensures every interaction feels immediate and physical, even without dynamic shape-shifting.
+
 ## Translations and development
 
 Want to help translate or build the extension from source? 
