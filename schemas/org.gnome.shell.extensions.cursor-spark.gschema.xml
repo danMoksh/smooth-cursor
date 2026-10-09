@@ -20,6 +20,10 @@
       <default>true</default>
       <summary>Rotate on Move</summary>
     </key>
+    <key name="rotate-reset-on-stop" type="b">
+      <default>true</default>
+      <summary>Reset Rotation on Stop</summary>
+    </key>
     <key name="cursor-size" type="i">
       <default>50</default>
       <summary>Cursor Size</summary>
