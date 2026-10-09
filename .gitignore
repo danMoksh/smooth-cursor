@@ -28,4 +28,3 @@ test-*.js
 skills/
 skills-lock.json
 conversation_export.jsonl
-AGENTS.md
