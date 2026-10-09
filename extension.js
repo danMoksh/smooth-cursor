@@ -207,7 +207,7 @@ export default class SmoothCursorExtension extends Extension {
         this._cursorY.set(y);
 
         if (this._rotateOnMove) {
-          if (speed > 0.1) {
+          if (speed > 150) { // Ignore micro-jitters
             const currentAngle = Math.atan2(vy, vx) * (180 / Math.PI) + 90;
             
             // Fix: Use modulo 360 to prevent wild spinning if previousAngle is very large
@@ -245,7 +245,7 @@ export default class SmoothCursorExtension extends Extension {
           this._previousAngle = 0;
         }
 
-        if (speed > 0.1) {
+        if (speed > 150) { // Ignore micro-jitters
           if (!this._isMouseDown) {
             this._scale.set(0.95);
             
