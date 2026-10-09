@@ -16,6 +16,18 @@
       <default>1</default>
       <summary>Spring Mass</summary>
     </key>
+    <key name="bounce-damping" type="i">
+      <default>25</default>
+      <summary>Bounce Damping</summary>
+    </key>
+    <key name="bounce-stiffness" type="i">
+      <default>500</default>
+      <summary>Bounce Stiffness</summary>
+    </key>
+    <key name="bounce-mass" type="i">
+      <default>1</default>
+      <summary>Bounce Mass</summary>
+    </key>
     <key name="rotate-on-move" type="b">
       <default>true</default>
       <summary>Rotate on Move</summary>

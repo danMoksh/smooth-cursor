@@ -115,9 +115,23 @@ export default class SmoothCursorExtension extends Extension {
         this._rotateResetOnStop = this._settings.get_boolean('rotate-reset-on-stop');
     }));
 
+    const updateBouncePhysics = () => {
+      this._scale.damping = this._settings.get_int('bounce-damping');
+      this._scale.stiffness = this._settings.get_int('bounce-stiffness');
+      this._scale.mass = this._settings.get_int('bounce-mass');
+    };
+    
+    this._settingsSignalIds.push(this._settings.connect('changed::bounce-damping', updateBouncePhysics));
+    this._settingsSignalIds.push(this._settings.connect('changed::bounce-stiffness', updateBouncePhysics));
+    this._settingsSignalIds.push(this._settings.connect('changed::bounce-mass', updateBouncePhysics));
+
     const springConfig = getSpringConfig();
     const rotationConfig = { damping: 60, stiffness: 300, mass: 1 };
-    const scaleConfig = { damping: 25, stiffness: 500, mass: 1 };
+    const scaleConfig = {
+      damping: this._settings.get_int('bounce-damping'),
+      stiffness: this._settings.get_int('bounce-stiffness'),
+      mass: this._settings.get_int('bounce-mass')
+    };
 
     this._cursorX = new Spring({ ...springConfig, initial: initialX });
     this._cursorY = new Spring({ ...springConfig, initial: initialY });
