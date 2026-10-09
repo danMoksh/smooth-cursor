@@ -36,6 +36,10 @@
       <default>true</default>
       <summary>Reset Rotation on Stop</summary>
     </key>
+    <key name="rotation-sensitivity" type="d">
+      <default>0.15</default>
+      <summary>Rotation Sensitivity Threshold</summary>
+    </key>
     <key name="cursor-size" type="i">
       <default>50</default>
       <summary>Cursor Size</summary>
