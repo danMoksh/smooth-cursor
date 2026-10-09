@@ -1,9 +1,9 @@
 {
   "name": "Smooth Cursor",
   "description": "Add a smooth cursor, physics based, smooth cursor, bouncy clicks and sparks to your pointer. Perfect for aesthetic screen recordings and presentations on Linux.",
-  "gettext-domain": "cursor-spark",
-  "settings-schema": "org.gnome.shell.extensions.cursor-spark",
-  "uuid": "smooth-cursor@m0ksh.github.io",
+  "gettext-domain": "smooth-cursor",
+  "settings-schema": "org.gnome.shell.extensions.smooth-cursor",
+  "uuid": "smooth-cursor@danMoksh.github.io",
   "shell-version": [
     "47",
     "48",
@@ -11,5 +11,5 @@
     "50",
     "51"
   ],
-  "url": "https://github.com/moksh/cursor-spark"
+  "url": "https://github.com/danMoksh/smooth-cursor"
 }
