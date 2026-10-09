@@ -200,31 +200,35 @@ export default class SmoothCursorExtension extends Extension {
         if (this._settings.get_boolean('rotate-on-move')) {
           if (speed > 0.1) {
             const currentAngle = Math.atan2(vy, vx) * (180 / Math.PI) + 90;
-            let angleDiff = currentAngle - this._previousAngle;
+            
+            // Fix: Use modulo 360 to prevent wild spinning if previousAngle is very large
+            let angleDiff = (currentAngle - this._previousAngle) % 360;
             if (angleDiff > 180) angleDiff -= 360;
             if (angleDiff < -180) angleDiff += 360;
             
             this._accumulatedRotation += angleDiff;
             this._rotation.set(this._accumulatedRotation);
             this._previousAngle = currentAngle;
-
+            
             if (this._rotationTimeoutId !== null) {
               GLib.Source.remove(this._rotationTimeoutId);
-            }
-
-            this._rotationTimeoutId = GLib.timeout_add(GLib.PRIORITY_DEFAULT, 150, () => {
-              const nearestUpright = Math.round(this._accumulatedRotation / 360) * 360;
-              this._rotation.set(nearestUpright);
-              this._accumulatedRotation = nearestUpright;
-              this._previousAngle = nearestUpright;
               this._rotationTimeoutId = null;
-              return GLib.SOURCE_REMOVE;
-            });
-          } else {
-            const nearestUpright = Math.round(this._accumulatedRotation / 360) * 360;
-            this._rotation.set(nearestUpright);
-            this._accumulatedRotation = nearestUpright;
-            this._previousAngle = nearestUpright;
+            }
+            
+            // If the user wants it to reset on stop, set the timeout
+            if (this._settings.get_boolean('rotate-reset-on-stop')) {
+              this._rotationTimeoutId = GLib.timeout_add(GLib.PRIORITY_DEFAULT, 150, () => {
+                const nearestUpright = Math.round(this._accumulatedRotation / 360) * 360;
+                this._rotation.set(nearestUpright);
+                this._accumulatedRotation = nearestUpright;
+                
+                // Fix: set previousAngle to the normalized 0-360 value so next movement isn't a 1440 degree diff!
+                this._previousAngle = nearestUpright % 360;
+                
+                this._rotationTimeoutId = null;
+                return GLib.SOURCE_REMOVE;
+              });
+            }
           }
         } else {
           this._rotation.set(0);

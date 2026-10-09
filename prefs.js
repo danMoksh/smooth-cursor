@@ -140,7 +140,8 @@ export default class CursorSparkPreferences extends ExtensionPreferences {
     };
 
     addFileRow(simpleGroup, "custom-cursor-path", _("Custom Cursor Image"), _("Select a PNG or SVG to override the default cursor"));
-    addSwitchRow(simpleGroup, "rotate-on-move", _("Rotate on Move"), _("Cursor rotates based on velocity"));
+    addSwitchRow(simpleGroup, "rotate-on-move", _("Rotate on Move"), _("Cursor rotates to face the direction of movement"));
+    addSwitchRow(simpleGroup, "rotate-reset-on-stop", _("Reset Rotation on Stop"), _("Automatically snaps the cursor back upright when you stop moving"));
     addSpinRow(simpleGroup, "cursor-size", _("Cursor Size"), _("Base size of the cursor in pixels"), 20, 100, 1);
     
     // Advanced Groups
