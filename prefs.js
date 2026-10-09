@@ -158,14 +158,14 @@ export default class CursorSparkPreferences extends ExtensionPreferences {
     };
 
     addFileRow(simpleGroup, "custom-cursor-path", _("Custom Cursor Image"), _("Select a PNG or SVG to override the default cursor"));
-    addSwitchRow(simpleGroup, "rotate-on-move", _("Rotate on Move"), _("Cursor rotates to face the direction of movement"));
-    addSwitchRow(simpleGroup, "rotate-reset-on-stop", _("Reset Rotation on Stop"), _("Automatically snaps the cursor back upright when you stop moving"));
+    const rotateMoveRow = addSwitchRow(simpleGroup, "rotate-on-move", _("Rotate on Move"), _("Cursor rotates to face the direction of movement"));
+    const rotateResetRow = addSwitchRow(simpleGroup, "rotate-reset-on-stop", _("Reset Rotation on Stop"), _("Automatically snaps the cursor back upright when you stop moving"));
     addSpinRow(simpleGroup, "cursor-size", _("Cursor Size"), _("Base size of the cursor in pixels"), 20, 100, 1);
     
     // Advanced Groups
     const physicsGroup = new Adw.PreferencesGroup({ title: _("Physics") });
     behaviorPage.add(physicsGroup);
-    addScaleRow(physicsGroup, "rotation-sensitivity", _("Rotation Sensitivity"), _("Higher values filter more jitter but require faster movement (pixels/ms)"), 0.1, 0.3, 0.01, [0.1, 0.15, 0.2, 0.3]);
+    const rotateSensRow = addScaleRow(physicsGroup, "rotation-sensitivity", _("Rotation Sensitivity"), _("Higher values filter more jitter but require faster movement (pixels/ms)"), 0.1, 0.3, 0.01, [0.1, 0.15, 0.2, 0.3]);
     addSpinRow(physicsGroup, "spring-damping", _("Spring Damping"), _("Cursor physics damping"), 1, 100, 1);
     addSpinRow(physicsGroup, "spring-stiffness", _("Spring Stiffness"), _("Cursor physics stiffness"), 10, 1000, 10);
     addSpinRow(physicsGroup, "spring-mass", _("Spring Mass"), _("Cursor physics mass"), 1, 100, 1);
@@ -176,11 +176,11 @@ export default class CursorSparkPreferences extends ExtensionPreferences {
 
     const sparkGroup = new Adw.PreferencesGroup({ title: _("Click Sparks") });
     behaviorPage.add(sparkGroup);
-    addColorRow(sparkGroup, "spark-color", _("Spark Color"), _("Color of the click sparks"));
-    addSpinRow(sparkGroup, "spark-size", _("Spark Size"), _("Length of the sparks"), 1, 100, 1);
-    addSpinRow(sparkGroup, "spark-radius", _("Spark Radius"), _("How far the sparks travel"), 10, 200, 5);
-    addSpinRow(sparkGroup, "spark-count", _("Spark Count"), _("Number of sparks per click"), 0, 30, 1);
-    addSpinRow(sparkGroup, "spark-duration", _("Spark Duration"), _("How long sparks last (ms)"), 50, 1000, 50);
+    const sparkColorRow = addColorRow(sparkGroup, "spark-color", _("Spark Color"), _("Color of the click sparks"));
+    const sparkSizeRow = addSpinRow(sparkGroup, "spark-size", _("Spark Size"), _("Length of the sparks"), 1, 100, 1);
+    const sparkRadiusRow = addSpinRow(sparkGroup, "spark-radius", _("Spark Radius"), _("How far the sparks travel"), 10, 200, 5);
+    const sparkCountRow = addSpinRow(sparkGroup, "spark-count", _("Spark Count"), _("Number of sparks per click"), 0, 30, 1);
+    const sparkDurationRow = addSpinRow(sparkGroup, "spark-duration", _("Spark Duration"), _("How long sparks last (ms)"), 50, 1000, 50);
 
     const resetGroup = new Adw.PreferencesGroup();
     behaviorPage.add(resetGroup);
@@ -197,6 +197,24 @@ export default class CursorSparkPreferences extends ExtensionPreferences {
     resetRow.add_suffix(resetBtn);
     resetRow.activatable_widget = resetBtn;
     resetGroup.add(resetRow);
+
+    const updateRotateDependencies = () => {
+      const rotateEnabled = settings.get_boolean("rotate-on-move");
+      rotateResetRow.set_sensitive(rotateEnabled);
+      rotateSensRow.set_sensitive(rotateEnabled);
+    };
+    settings.connect("changed::rotate-on-move", updateRotateDependencies);
+    updateRotateDependencies();
+
+    const updateSparkDependencies = () => {
+      const sparksEnabled = settings.get_int("spark-count") > 0;
+      sparkColorRow.set_sensitive(sparksEnabled);
+      sparkSizeRow.set_sensitive(sparksEnabled);
+      sparkRadiusRow.set_sensitive(sparksEnabled);
+      sparkDurationRow.set_sensitive(sparksEnabled);
+    };
+    settings.connect("changed::spark-count", updateSparkDependencies);
+    updateSparkDependencies();
 
     const updateVisibility = () => {
       const advanced = advancedSwitch.active;
