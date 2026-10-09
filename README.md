@@ -1,7 +1,7 @@
 <div align="center">
   <img src="assets/logo.png" width="200" alt="Smooth Cursor Logo">
   <h1>Smooth Cursor</h1>
-  <p>A buttery smooth, physics-based cursor for GNOME Shell.</p>
+  <p>A smooth, physics-based cursor for GNOME Shell.</p>
 </div>
 
 ---
