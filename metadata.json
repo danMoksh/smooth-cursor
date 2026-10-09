@@ -1,6 +1,6 @@
 {
   "name": "Smooth Cursor",
-  "description": "Adds a buttery-smooth physics-based trail, bouncy clicks, and spark explosions to your pointer. Perfect for aesthetic screen recordings and presentations on Linux.",
+  "description": "Add a smooth cursor, physics based, smooth cursor, bouncy clicks and sparks to your pointer. Perfect for aesthetic screen recordings and presentations on Linux.",
   "gettext-domain": "cursor-spark",
   "settings-schema": "org.gnome.shell.extensions.cursor-spark",
   "uuid": "smooth-cursor@m0ksh.github.io",
