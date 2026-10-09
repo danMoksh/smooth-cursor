@@ -165,7 +165,7 @@ export default class CursorSparkPreferences extends ExtensionPreferences {
     // Advanced Groups
     const physicsGroup = new Adw.PreferencesGroup({ title: _("Physics") });
     behaviorPage.add(physicsGroup);
-    addScaleRow(physicsGroup, "rotation-sensitivity", _("Rotation Sensitivity"), _("Higher values filter more jitter but require faster movement (pixels/ms)"), 0.1, 0.3, 0.01, [0.1, 0.2, 0.3]);
+    addScaleRow(physicsGroup, "rotation-sensitivity", _("Rotation Sensitivity"), _("Higher values filter more jitter but require faster movement (pixels/ms)"), 0.1, 0.3, 0.01, [0.1, 0.15, 0.2, 0.3]);
     addSpinRow(physicsGroup, "spring-damping", _("Spring Damping"), _("Cursor physics damping"), 1, 100, 1);
     addSpinRow(physicsGroup, "spring-stiffness", _("Spring Stiffness"), _("Cursor physics stiffness"), 10, 1000, 10);
     addSpinRow(physicsGroup, "spring-mass", _("Spring Mass"), _("Cursor physics mass"), 1, 100, 1);
