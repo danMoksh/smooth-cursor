@@ -3,8 +3,8 @@ set -e
 
 cd "$(dirname "$0")"
 
-EXTENSION_NAME="cursor-spark"
-ZIP_FILE="${EXTENSION_NAME}.zip"
+EXTENSION_NAME="smooth-cursor"
+ZIP_FILE="smooth-cursor@danMoksh.github.io.zip"
 
 # Files to include in the zip
 FILES=(
@@ -22,6 +22,9 @@ FILES=(
 )
 
 echo "Packaging ${EXTENSION_NAME}..."
+# Compile the settings schema
+glib-compile-schemas schemas/
+
 
 # Compile translations so the zip always carries fresh .mo files.
 # Guard: even if compilation is skipped (no msgfmt), the dir must
@@ -39,7 +42,7 @@ zip -r "${ZIP_FILE}" "${FILES[@]}" \
     -x "*.bak" \
     -x "*.swp" \
     -x "*/__pycache__/*" \
-    -x "schemas/gschemas.compiled"
+    
 
 echo "Created ${ZIP_FILE}"
 echo "Contents:"

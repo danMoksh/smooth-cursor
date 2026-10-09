@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
 #
-# Cursor Spark - one-line installer
+# Smooth Cursor - one-line installer
 #
 # Usage (install the latest version):
-#   curl -fsSL https://raw.githubusercontent.com/Moksh/cursor-spark/main/install.sh | bash
+#   curl -fsSL https://raw.githubusercontent.com/danMoksh/cursor-spark/main/install.sh | bash
 #
 # Optional environment variables:
 #   BRANCH=dev   install a specific branch (default: main)
 #
 set -euo pipefail
 
-REPO_URL="https://github.com/Moksh/cursor-spark.git"
+REPO_URL="https://github.com/danMoksh/cursor-spark.git"
 BRANCH="${BRANCH:-main}"
 
 info()  { printf '\033[1;34m[*]\033[0m %s\n' "$1"; }
