@@ -31,17 +31,17 @@ Smooth Cursor is built for and compatible with GNOME Shell versions: **47, 48, 4
 The easiest way to install is by running these commands in your terminal:
 
 ```sh
-git clone https://github.com/moksh/smooth-cursor.git
+git clone https://github.com/danMoksh/smooth-cursor.git
 cd smooth-cursor
-mkdir -p ~/.local/share/gnome-shell/extensions/smooth-cursor@m0ksh.github.io
-cp -r . ~/.local/share/gnome-shell/extensions/smooth-cursor@m0ksh.github.io
+mkdir -p ~/.local/share/gnome-shell/extensions/smooth-cursor@danMoksh.github.io
+cp -r . ~/.local/share/gnome-shell/extensions/smooth-cursor@danMoksh.github.io
 ```
 
 ### manual install
 
 1. Clone or download this repository.
 2. Open your file manager and navigate to `~/.local/share/gnome-shell/extensions/` (press `Ctrl` + `H` to see hidden folders).
-3. Paste the downloaded folder there and rename it exactly to `smooth-cursor@m0ksh.github.io`.
+3. Paste the downloaded folder there and rename it exactly to `smooth-cursor@danMoksh.github.io`.
 
 ### restart gnome shell
 
