@@ -16,3 +16,9 @@ cursor-spark.zip
 # ZCode agent artifacts
 .zcode/
 locale/
+
+# Local testing and generated docs
+docs/
+export_conversations.py
+patch_*.js
+test-*.js

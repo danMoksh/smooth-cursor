@@ -11,6 +11,8 @@ FILES=(
     "extension.js"
     "metadata.json"
     "prefs.js"
+    "spring.js"
+    "cursor.svg"
     "LICENSE"
     "README.md"
     "doc"
