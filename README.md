@@ -6,6 +6,8 @@
 
 ---
 
+<video src="assets/smoothcursor.mp4" autoplay loop muted playsinline width="100%"></video>
+
 We spend 8 hours a day staring at a pointer. It's time it felt alive. 
 
 Every flick, drag, and click is powered by realistic physics. It is built for aesthetic screen recordings, but perfectly tuned for daily use.
