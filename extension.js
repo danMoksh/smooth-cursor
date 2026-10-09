@@ -120,6 +120,7 @@ export default class SmoothCursorExtension extends Extension {
     this._previousAngle = 0;
     this._accumulatedRotation = 0;
     this._scaleTimeoutId = null;
+    this._rotationTimeoutId = null;
 
     this._tickTime = GLib.get_monotonic_time() / 1000;
 
@@ -206,6 +207,19 @@ export default class SmoothCursorExtension extends Extension {
             this._accumulatedRotation += angleDiff;
             this._rotation.set(this._accumulatedRotation);
             this._previousAngle = currentAngle;
+
+            if (this._rotationTimeoutId !== null) {
+              GLib.Source.remove(this._rotationTimeoutId);
+            }
+
+            this._rotationTimeoutId = GLib.timeout_add(GLib.PRIORITY_DEFAULT, 150, () => {
+              const nearestUpright = Math.round(this._accumulatedRotation / 360) * 360;
+              this._rotation.set(nearestUpright);
+              this._accumulatedRotation = nearestUpright;
+              this._previousAngle = nearestUpright;
+              this._rotationTimeoutId = null;
+              return GLib.SOURCE_REMOVE;
+            });
           } else {
             const nearestUpright = Math.round(this._accumulatedRotation / 360) * 360;
             this._rotation.set(nearestUpright);
@@ -308,6 +322,11 @@ export default class SmoothCursorExtension extends Extension {
     if (this._scaleTimeoutId) {
       GLib.Source.remove(this._scaleTimeoutId);
       this._scaleTimeoutId = null;
+    }
+    
+    if (this._rotationTimeoutId) {
+      GLib.Source.remove(this._rotationTimeoutId);
+      this._rotationTimeoutId = null;
     }
 
 
