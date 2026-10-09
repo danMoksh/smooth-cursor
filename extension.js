@@ -106,6 +106,15 @@ export default class SmoothCursorExtension extends Extension {
     this._settingsSignalIds.push(this._settings.connect('changed::spring-stiffness', updatePhysics));
     this._settingsSignalIds.push(this._settings.connect('changed::spring-mass', updatePhysics));
     
+    this._rotateOnMove = this._settings.get_boolean('rotate-on-move');
+    this._rotateResetOnStop = this._settings.get_boolean('rotate-reset-on-stop');
+    this._settingsSignalIds.push(this._settings.connect('changed::rotate-on-move', () => {
+        this._rotateOnMove = this._settings.get_boolean('rotate-on-move');
+    }));
+    this._settingsSignalIds.push(this._settings.connect('changed::rotate-reset-on-stop', () => {
+        this._rotateResetOnStop = this._settings.get_boolean('rotate-reset-on-stop');
+    }));
+
     const springConfig = getSpringConfig();
     const rotationConfig = { damping: 60, stiffness: 300, mass: 1 };
     const scaleConfig = { damping: 25, stiffness: 500, mass: 1 };
@@ -197,7 +206,7 @@ export default class SmoothCursorExtension extends Extension {
         this._cursorX.set(x);
         this._cursorY.set(y);
 
-        if (this._settings.get_boolean('rotate-on-move')) {
+        if (this._rotateOnMove) {
           if (speed > 0.1) {
             const currentAngle = Math.atan2(vy, vx) * (180 / Math.PI) + 90;
             
@@ -216,7 +225,7 @@ export default class SmoothCursorExtension extends Extension {
             }
             
             // If the user wants it to reset on stop, set the timeout
-            if (this._settings.get_boolean('rotate-reset-on-stop')) {
+            if (this._rotateResetOnStop) {
               this._rotationTimeoutId = GLib.timeout_add(GLib.PRIORITY_DEFAULT, 150, () => {
                 const nearestUpright = Math.round(this._accumulatedRotation / 360) * 360;
                 this._rotation.set(nearestUpright);
