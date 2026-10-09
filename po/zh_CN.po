@@ -25,7 +25,7 @@ msgstr ""
 msgid ""
 "Format per line: #RRGGBB ratio(positive number). Values are normalized "
 "automatically.\n"
-"Example: ratios 1, 1, 1 split the trail into three equal parts."
+"Example: ratios 1, 1, 1 split the cursor into three equal parts."
 msgstr ""
 "每行格式：#RRGGBB 比例(正数)。数值会自动归一化。\n"
 "示例：比例 1、1、1 将轨迹均分为三段。"
@@ -60,7 +60,7 @@ msgstr "样式"
 
 #: prefs.js:249
 msgid ""
-"Pick a style. Each preview shows the trail on light and dark backgrounds."
+"Pick a style. Each preview shows the cursor on light and dark backgrounds."
 msgstr ""
 "选择一个样式。每个预览上半为白色背景、下半为黑色背景，分别展示浅色与暗色下的"
 "效果。"
@@ -106,7 +106,7 @@ msgid "Fade Duration"
 msgstr "淡出时长"
 
 #: prefs.js:500
-msgid "How long the trail takes to fade out (milliseconds)"
+msgid "How long the cursor takes to fade out (milliseconds)"
 msgstr "轨迹淡出所需的时长（毫秒）"
 
 #: prefs.js:523
@@ -114,7 +114,7 @@ msgid "Line Width"
 msgstr "线条宽度"
 
 #: prefs.js:524
-msgid "Thickness of the mouse trail line"
+msgid "Thickness of the mouse cursor line"
 msgstr "轨迹线条的粗细"
 
 #: prefs.js:548
@@ -122,23 +122,23 @@ msgid "Color Mode"
 msgstr "颜色模式"
 
 #: prefs.js:549
-msgid "Choose a color mode for the mouse trail"
+msgid "Choose a color mode for the mouse cursor"
 msgstr "选择轨迹的颜色模式"
 
 #: prefs.js:566
-msgid "Trail Color"
+msgid "Cursor Color"
 msgstr "轨迹颜色"
 
 #: prefs.js:567
-msgid "Color of the mouse trail"
+msgid "Color of the mouse cursor"
 msgstr "轨迹的颜色"
 
 #: prefs.js:603
-msgid "Trail Transparency"
+msgid "Cursor Transparency"
 msgstr "轨迹透明度"
 
 #: prefs.js:604
-msgid "Opacity level of the mouse trail"
+msgid "Opacity level of the mouse cursor"
 msgstr "轨迹的不透明程度"
 
 #: prefs.js:618 prefs.js:743

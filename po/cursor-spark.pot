@@ -28,7 +28,7 @@ msgstr ""
 msgid ""
 "Format per line: #RRGGBB ratio(positive number). Values are normalized "
 "automatically.\n"
-"Example: ratios 1, 1, 1 split the trail into three equal parts."
+"Example: ratios 1, 1, 1 split the cursor into three equal parts."
 msgstr ""
 
 #: prefs.js:47
@@ -59,7 +59,7 @@ msgstr ""
 
 #: prefs.js:249
 msgid ""
-"Pick a style. Each preview shows the trail on light and dark backgrounds."
+"Pick a style. Each preview shows the cursor on light and dark backgrounds."
 msgstr ""
 
 #: prefs.js:264
@@ -103,7 +103,7 @@ msgid "Fade Duration"
 msgstr ""
 
 #: prefs.js:500
-msgid "How long the trail takes to fade out (milliseconds)"
+msgid "How long the cursor takes to fade out (milliseconds)"
 msgstr ""
 
 #: prefs.js:523
@@ -111,7 +111,7 @@ msgid "Line Width"
 msgstr ""
 
 #: prefs.js:524
-msgid "Thickness of the mouse trail line"
+msgid "Thickness of the mouse cursor line"
 msgstr ""
 
 #: prefs.js:548
@@ -119,23 +119,23 @@ msgid "Color Mode"
 msgstr ""
 
 #: prefs.js:549
-msgid "Choose a color mode for the mouse trail"
+msgid "Choose a color mode for the mouse cursor"
 msgstr ""
 
 #: prefs.js:566
-msgid "Trail Color"
+msgid "Cursor Color"
 msgstr ""
 
 #: prefs.js:567
-msgid "Color of the mouse trail"
+msgid "Color of the mouse cursor"
 msgstr ""
 
 #: prefs.js:603
-msgid "Trail Transparency"
+msgid "Cursor Transparency"
 msgstr ""
 
 #: prefs.js:604
-msgid "Opacity level of the mouse trail"
+msgid "Opacity level of the mouse cursor"
 msgstr ""
 
 #: prefs.js:618 prefs.js:743

@@ -27,7 +27,7 @@ msgstr ""
 msgid ""
 "Format per line: #RRGGBB ratio(positive number). Values are normalized "
 "automatically.\n"
-"Example: ratios 1, 1, 1 split the trail into three equal parts."
+"Example: ratios 1, 1, 1 split the cursor into three equal parts."
 msgstr ""
 "Format pro Zeile: #RRGGBB Verhältnis (positive Zahl). Werte werden "
 "automatisch normalisiert.\n"
@@ -63,7 +63,7 @@ msgstr "Stil"
 
 #: prefs.js:249
 msgid ""
-"Pick a style. Each preview shows the trail on light and dark backgrounds."
+"Pick a style. Each preview shows the cursor on light and dark backgrounds."
 msgstr ""
 "Wählen Sie einen Stil. Jede Vorschau zeigt die Spur vor hellem und dunklem "
 "Hintergrund."
@@ -109,7 +109,7 @@ msgid "Fade Duration"
 msgstr "Ausblenddauer"
 
 #: prefs.js:500
-msgid "How long the trail takes to fade out (milliseconds)"
+msgid "How long the cursor takes to fade out (milliseconds)"
 msgstr "Dauer, bis die Spur ausgeblendet ist (Millisekunden)"
 
 #: prefs.js:523
@@ -117,7 +117,7 @@ msgid "Line Width"
 msgstr "Linienbreite"
 
 #: prefs.js:524
-msgid "Thickness of the mouse trail line"
+msgid "Thickness of the mouse cursor line"
 msgstr "Dicke der Spurlinie"
 
 #: prefs.js:548
@@ -125,23 +125,23 @@ msgid "Color Mode"
 msgstr "Farbmodus"
 
 #: prefs.js:549
-msgid "Choose a color mode for the mouse trail"
+msgid "Choose a color mode for the mouse cursor"
 msgstr "Farbmodus für die Spur wählen"
 
 #: prefs.js:566
-msgid "Trail Color"
+msgid "Cursor Color"
 msgstr "Spurfarbe"
 
 #: prefs.js:567
-msgid "Color of the mouse trail"
+msgid "Color of the mouse cursor"
 msgstr "Farbe der Mausspur"
 
 #: prefs.js:603
-msgid "Trail Transparency"
+msgid "Cursor Transparency"
 msgstr "Spurtransparenz"
 
 #: prefs.js:604
-msgid "Opacity level of the mouse trail"
+msgid "Opacity level of the mouse cursor"
 msgstr "Deckkraft der Mausspur"
 
 #: prefs.js:618 prefs.js:743
