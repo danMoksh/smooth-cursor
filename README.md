@@ -8,15 +8,27 @@
 
 We spend 8 hours a day staring at a pointer. It's time it felt alive. 
 
-Every flick, drag, and click is powered by realistic physics—making your desktop feel incredibly satisfying and fluid. It's built for aesthetic screen recordings, but perfectly tuned for daily use.
+Every flick, drag, and click is powered by realistic physics. It is built for aesthetic screen recordings, but perfectly tuned for daily use.
 
 ## features
 
-- **Physics-Based Movement:** The cursor drags, rotates, and settles using realistic spring physics.
-- **Click Sparks & Bounce:** Since Wayland prevents extensions from dynamically reading cursor shapes (like the I-beam text selector), the cursor physically shrinks and bounces when you click to maintain a responsive feel. You can also enable aesthetic click sparks.
-- **Custom Cursors:** Replace the default pointer with any custom SVG or PNG file.
-- **Fully Configurable:** Every physics variable (damping, stiffness, mass, rotation sensitivity) is exposed in the extension preferences.
-- **Cross-Platform:** Runs flawlessly on both Wayland and X11.
+- **Physics-based movement.** The cursor drags, rotates, and settles using realistic spring physics.
+- **Click sparks and bounce.** Wayland prevents extensions from dynamically reading cursor shapes like the I-beam text selector. To maintain a responsive feel, the cursor physically shrinks and bounces when you click. You can also enable click sparks.
+- **Custom cursors.** Replace the default pointer with any custom SVG or PNG file.
+- **Fully configurable.** Every physics variable (damping, stiffness, mass, rotation sensitivity) is exposed in the extension preferences.
+- **Cross-platform.** Runs on both Wayland and X11.
+
+## how it works
+
+The extension replaces the system cursor with a custom graphic object.
+
+The extension reads the hardware mouse coordinates on every frame.
+
+A mathematical spring model calculates the distance between the graphic object and the hardware coordinates. This distance creates a force. The force pulls the graphic object toward the coordinates.
+
+A second spring model rotates the object to match the movement direction.
+
+The extension polls the mouse button state on every frame. A third spring model scales the object on click to create a physical bounce effect.
 
 ## supported versions
 
