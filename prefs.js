@@ -71,6 +71,24 @@ export default class CursorSparkPreferences extends ExtensionPreferences {
       return row;
     };
 
+    const addScaleRow = (group, key, title, subtitle, min, max, step, marks = []) => {
+      const row = new Adw.ActionRow({ title, subtitle });
+      const scale = Gtk.Scale.new_with_range(Gtk.Orientation.HORIZONTAL, min, max, step);
+      scale.set_draw_value(true);
+      scale.set_size_request(200, -1);
+      scale.set_valign(Gtk.Align.CENTER);
+      
+      for (const m of marks) {
+        scale.add_mark(m, Gtk.PositionType.BOTTOM, null);
+      }
+
+      settings.bind(key, scale.get_adjustment(), "value", Gio.SettingsBindFlags.DEFAULT);
+      
+      row.add_suffix(scale);
+      group.add(row);
+      return row;
+    };
+
     const addColorRow = (group, key, title, subtitle) => {
       const row = new Adw.ActionRow({ title, subtitle });
       const colorBtn = new Gtk.ColorButton({ valign: Gtk.Align.CENTER });
@@ -142,12 +160,12 @@ export default class CursorSparkPreferences extends ExtensionPreferences {
     addFileRow(simpleGroup, "custom-cursor-path", _("Custom Cursor Image"), _("Select a PNG or SVG to override the default cursor"));
     addSwitchRow(simpleGroup, "rotate-on-move", _("Rotate on Move"), _("Cursor rotates to face the direction of movement"));
     addSwitchRow(simpleGroup, "rotate-reset-on-stop", _("Reset Rotation on Stop"), _("Automatically snaps the cursor back upright when you stop moving"));
-    addSpinRow(simpleGroup, "rotation-sensitivity", _("Rotation Sensitivity"), _("Higher values filter more jitter but require faster movement (pixels/ms)"), 0.1, 0.3, 0.01);
     addSpinRow(simpleGroup, "cursor-size", _("Cursor Size"), _("Base size of the cursor in pixels"), 20, 100, 1);
     
     // Advanced Groups
     const physicsGroup = new Adw.PreferencesGroup({ title: _("Physics") });
     behaviorPage.add(physicsGroup);
+    addScaleRow(physicsGroup, "rotation-sensitivity", _("Rotation Sensitivity"), _("Higher values filter more jitter but require faster movement (pixels/ms)"), 0.1, 0.3, 0.01, [0.1, 0.2, 0.3]);
     addSpinRow(physicsGroup, "spring-damping", _("Spring Damping"), _("Cursor physics damping"), 1, 100, 1);
     addSpinRow(physicsGroup, "spring-stiffness", _("Spring Stiffness"), _("Cursor physics stiffness"), 10, 1000, 10);
     addSpinRow(physicsGroup, "spring-mass", _("Spring Mass"), _("Cursor physics mass"), 1, 100, 1);
@@ -163,6 +181,22 @@ export default class CursorSparkPreferences extends ExtensionPreferences {
     addSpinRow(sparkGroup, "spark-radius", _("Spark Radius"), _("How far the sparks travel"), 10, 200, 5);
     addSpinRow(sparkGroup, "spark-count", _("Spark Count"), _("Number of sparks per click"), 0, 30, 1);
     addSpinRow(sparkGroup, "spark-duration", _("Spark Duration"), _("How long sparks last (ms)"), 50, 1000, 50);
+
+    const resetGroup = new Adw.PreferencesGroup();
+    behaviorPage.add(resetGroup);
+    
+    const resetRow = new Adw.ActionRow({ title: _("Reset to Defaults"), subtitle: _("Restore all settings to their original values") });
+    const resetBtn = new Gtk.Button({ label: _("Reset"), valign: Gtk.Align.CENTER });
+    resetBtn.add_css_class("destructive-action");
+    resetBtn.connect('clicked', () => {
+      const keys = settings.settings_schema.list_keys();
+      for (const k of keys) {
+        settings.reset(k);
+      }
+    });
+    resetRow.add_suffix(resetBtn);
+    resetRow.activatable_widget = resetBtn;
+    resetGroup.add(resetRow);
 
     const updateVisibility = () => {
       const advanced = advancedSwitch.active;
