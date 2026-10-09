@@ -6,7 +6,7 @@
 
 ---
 
-<video src="assets/smoothcursor.mp4" autoplay loop muted playsinline width="100%"></video>
+https://github.com/user-attachments/assets/e3a8f524-e013-4377-9d22-7bae57346b66
 
 We spend 8 hours a day staring at a pointer. It's time it felt alive. 
 
@@ -83,7 +83,7 @@ Wayland prevents extensions from dynamically reading the current cursor shape (s
 
 To maintain a highly responsive feel despite this limitation, the extension uses a tactile workaround: **whenever you click, drag, or write, the cursor physically shrinks and bounces.** This tiny bit of interaction ensures the pointer always feels alive and responsive to your actions, even without dynamic shape-shifting.
 
-<video src="assets/text-highlighting.mp4" autoplay loop muted playsinline width="100%"></video>
+https://github.com/user-attachments/assets/df00474e-c851-4e3c-8e24-d107b1bd1d05
 
 ## Translations and development
 
