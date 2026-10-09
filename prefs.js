@@ -150,6 +150,9 @@ export default class CursorSparkPreferences extends ExtensionPreferences {
     addSpinRow(physicsGroup, "spring-damping", _("Spring Damping"), _("Cursor physics damping"), 1, 100, 1);
     addSpinRow(physicsGroup, "spring-stiffness", _("Spring Stiffness"), _("Cursor physics stiffness"), 10, 1000, 10);
     addSpinRow(physicsGroup, "spring-mass", _("Spring Mass"), _("Cursor physics mass"), 1, 100, 1);
+    addSpinRow(physicsGroup, "bounce-damping", _("Bounce Damping"), _("Click bounce damping"), 1, 100, 1);
+    addSpinRow(physicsGroup, "bounce-stiffness", _("Bounce Stiffness"), _("Click bounce stiffness"), 10, 1000, 10);
+    addSpinRow(physicsGroup, "bounce-mass", _("Bounce Mass"), _("Click bounce mass"), 1, 100, 1);
     addSpinRow(physicsGroup, "extra-scale", _("Click Bounce Scale"), _("Multiplier for the click bounce scale"), 0.0, 1.0, 0.05);
 
     const sparkGroup = new Adw.PreferencesGroup({ title: _("Click Sparks") });
