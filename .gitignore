@@ -1,5 +1,6 @@
 # Build artifacts
-smooth-cursor.zip
+*.zip
+venv/
 
 # Editor
 *~

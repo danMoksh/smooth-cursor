@@ -4,12 +4,16 @@
         id="org.gnome.shell.extensions.smooth-cursor"
         path="/org/gnome/shell/extensions/smooth-cursor/"
     >
+    <key name="preset" type="s">
+      <default>'subtle'</default>
+      <summary>Cursor Behavior Preset</summary>
+    </key>
     <key name="spring-damping" type="i">
-      <default>45</default>
+      <default>50</default>
       <summary>Spring Damping</summary>
     </key>
     <key name="spring-stiffness" type="i">
-      <default>400</default>
+      <default>460</default>
       <summary>Spring Stiffness</summary>
     </key>
     <key name="spring-mass" type="i">
@@ -17,11 +21,11 @@
       <summary>Spring Mass</summary>
     </key>
     <key name="bounce-damping" type="i">
-      <default>25</default>
+      <default>30</default>
       <summary>Bounce Damping</summary>
     </key>
     <key name="bounce-stiffness" type="i">
-      <default>500</default>
+      <default>600</default>
       <summary>Bounce Stiffness</summary>
     </key>
     <key name="bounce-mass" type="i">
@@ -33,12 +37,20 @@
       <summary>Rotate on Move</summary>
     </key>
     <key name="rotate-reset-on-stop" type="b">
-      <default>false</default>
+      <default>true</default>
       <summary>Reset Rotation on Stop</summary>
     </key>
     <key name="rotation-sensitivity" type="d">
-      <default>0.15</default>
+      <default>0.22</default>
       <summary>Rotation Sensitivity Threshold</summary>
+    </key>
+    <key name="max-tilt-angle" type="i">
+      <default>20</default>
+      <summary>Maximum Tilt Angle in Degrees (360 for full spin)</summary>
+    </key>
+    <key name="cursor-shape" type="s">
+      <default>'arrow'</default>
+      <summary>Cursor Shape Style (arrow, ball, custom)</summary>
     </key>
     <key name="cursor-size" type="i">
       <default>50</default>
@@ -49,23 +61,23 @@
       <summary>Spark Color</summary>
     </key>
     <key name="spark-size" type="i">
-      <default>25</default>
+      <default>18</default>
       <summary>Spark Size</summary>
     </key>
     <key name="spark-radius" type="i">
-      <default>45</default>
+      <default>30</default>
       <summary>Spark Radius</summary>
     </key>
     <key name="spark-count" type="i">
-      <default>8</default>
+      <default>5</default>
       <summary>Spark Count</summary>
     </key>
     <key name="spark-duration" type="i">
-      <default>400</default>
+      <default>250</default>
       <summary>Spark Duration</summary>
     </key>
     <key name="extra-scale" type="d">
-      <default>1.0</default>
+      <default>0.75</default>
       <summary>Extra Scale</summary>
     </key>
     <key name="custom-cursor-path" type="s">

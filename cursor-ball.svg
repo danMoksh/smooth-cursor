@@ -1,0 +1,33 @@
+<svg viewBox="0 0 48 48" width="48" height="48" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Soft diffused drop shadow feathering outward -->
+    <filter id="soft-glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="2.2" result="blur"/>
+      <feColorMatrix in="blur" type="matrix"
+        values="0 0 0 0 0
+                0 0 0 0 0
+                0 0 0 0 0
+                0 0 0 0.42 0" result="shadow"/>
+      <feMerge>
+        <feMergeNode in="shadow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Translucent frosted glass core (45% opacity) for crystal-clear readability -->
+    <radialGradient id="milky-ball" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.45"/>
+      <stop offset="70%" stop-color="#ffffff" stop-opacity="0.52"/>
+      <stop offset="88%" stop-color="#f0f0f4" stop-opacity="0.60"/>
+      <stop offset="100%" stop-color="#c5c5cc" stop-opacity="0.45"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Semi-transparent glass ball with soft feathered shadow -->
+  <circle cx="24" cy="24" r="18"
+          fill="url(#milky-ball)"
+          stroke="#000000"
+          stroke-opacity="0.20"
+          stroke-width="0.8"
+          filter="url(#soft-glow)"/>
+</svg>

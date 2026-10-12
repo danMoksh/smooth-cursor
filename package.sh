@@ -13,6 +13,7 @@ FILES=(
     "prefs.js"
     "spring.js"
     "cursor.svg"
+    "cursor-ball.svg"
     "LICENSE"
     "README.md"
     "doc"

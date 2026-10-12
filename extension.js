@@ -53,22 +53,36 @@ export default class SmoothCursorExtension extends Extension {
       fallback_icon_name: 'pointer',
     });
     
+    this._isCenterHotspot = false;
+
     const updateCursorImage = () => {
-      const customPath = this._settings.get_string('custom-cursor-path');
-      let gicon;
-      if (customPath && GLib.file_test(customPath, GLib.FileTest.EXISTS)) {
-        gicon = Gio.icon_new_for_string(customPath);
+      const cursorShape = this._settings.get_string('cursor-shape');
+      let iconFile;
+      if (cursorShape === 'ball') {
+        iconFile = this.dir.get_child('cursor-ball.svg').get_path();
+        this._isCenterHotspot = true;
+        this._cursorActor.set_pivot_point(0.5, 0.5);
+      } else if (cursorShape === 'custom') {
+        const customPath = this._settings.get_string('custom-cursor-path');
+        if (customPath && GLib.file_test(customPath, GLib.FileTest.EXISTS)) {
+          iconFile = customPath;
+        } else {
+          iconFile = this.dir.get_child('cursor.svg').get_path();
+        }
+        this._isCenterHotspot = false;
+        this._cursorActor.set_pivot_point(0, 0);
       } else {
-        const iconFile = this.dir.get_child('cursor.svg').get_path();
-        gicon = Gio.icon_new_for_string(iconFile);
+        iconFile = this.dir.get_child('cursor.svg').get_path();
+        this._isCenterHotspot = false;
+        this._cursorActor.set_pivot_point(0, 0);
       }
-      this._cursorActor.gicon = gicon;
+      this._cursorActor.gicon = Gio.icon_new_for_string(iconFile);
     };
-    
+
+    this._settingsSignalIds.push(this._settings.connect('changed::cursor-shape', updateCursorImage));
     this._settingsSignalIds.push(this._settings.connect('changed::custom-cursor-path', updateCursorImage));
     updateCursorImage();
 
-    this._cursorActor.set_pivot_point(0, 0);
     this._settingsSignalIds.push(this._settings.connect('changed::cursor-size', () => {
       this._cursorActor.icon_size = this._settings.get_int('cursor-size');
     }));
@@ -116,6 +130,7 @@ export default class SmoothCursorExtension extends Extension {
     this._rotateOnMove = this._settings.get_boolean('rotate-on-move');
     this._rotateResetOnStop = this._settings.get_boolean('rotate-reset-on-stop');
     this._rotationSensitivity = this._settings.get_double('rotation-sensitivity');
+    this._maxTiltAngle = this._settings.get_int('max-tilt-angle');
     this._settingsSignalIds.push(this._settings.connect('changed::rotate-on-move', () => {
         this._rotateOnMove = this._settings.get_boolean('rotate-on-move');
     }));
@@ -124,6 +139,9 @@ export default class SmoothCursorExtension extends Extension {
     }));
     this._settingsSignalIds.push(this._settings.connect('changed::rotation-sensitivity', () => {
         this._rotationSensitivity = this._settings.get_double('rotation-sensitivity');
+    }));
+    this._settingsSignalIds.push(this._settings.connect('changed::max-tilt-angle', () => {
+        this._maxTiltAngle = this._settings.get_int('max-tilt-angle');
     }));
 
     const updateBouncePhysics = () => {
@@ -231,37 +249,53 @@ export default class SmoothCursorExtension extends Extension {
         this._cursorX.set(x);
         this._cursorY.set(y);
 
-        if (this._rotateOnMove) {
+        if (this._rotateOnMove && (this._maxTiltAngle === undefined || this._maxTiltAngle > 0)) {
           if (speed > this._rotationSensitivity) { // Ignore micro-jitters
-            const currentAngle = Math.atan2(vy, vx) * (180 / Math.PI) + 90;
-            
-            // Fix: Use modulo 360 to prevent wild spinning if previousAngle is very large
-            let angleDiff = (currentAngle - this._previousAngle) % 360;
-            if (angleDiff > 180) angleDiff -= 360;
-            if (angleDiff < -180) angleDiff += 360;
-            
-            this._accumulatedRotation += angleDiff;
-            this._rotation.set(this._accumulatedRotation);
-            this._previousAngle = currentAngle;
-            
-            if (this._rotationTimeoutId !== null) {
-              GLib.Source.remove(this._rotationTimeoutId);
-              this._rotationTimeoutId = null;
-            }
-            
-            // If the user wants it to reset on stop, set the timeout
-            if (this._rotateResetOnStop) {
-              this._rotationTimeoutId = GLib.timeout_add(GLib.PRIORITY_DEFAULT, 150, () => {
-                const nearestUpright = Math.round(this._accumulatedRotation / 360) * 360;
-                this._rotation.set(nearestUpright);
-                this._accumulatedRotation = nearestUpright;
-                
-                // Fix: set previousAngle to the normalized 0-360 value so next movement isn't a 1440 degree diff!
-                this._previousAngle = nearestUpright % 360;
-                
+            const maxAngle = this._maxTiltAngle !== undefined ? this._maxTiltAngle : 360;
+            if (maxAngle >= 360) {
+              const currentAngle = Math.atan2(vy, vx) * (180 / Math.PI) + 90;
+              
+              let angleDiff = (currentAngle - this._previousAngle) % 360;
+              if (angleDiff > 180) angleDiff -= 360;
+              if (angleDiff < -180) angleDiff += 360;
+              
+              this._accumulatedRotation += angleDiff;
+              this._rotation.set(this._accumulatedRotation);
+              this._previousAngle = currentAngle;
+              
+              if (this._rotationTimeoutId !== null) {
+                GLib.Source.remove(this._rotationTimeoutId);
                 this._rotationTimeoutId = null;
-                return GLib.SOURCE_REMOVE;
-              });
+              }
+              
+              if (this._rotateResetOnStop) {
+                this._rotationTimeoutId = GLib.timeout_add(GLib.PRIORITY_DEFAULT, 150, () => {
+                  const nearestUpright = Math.round(this._accumulatedRotation / 360) * 360;
+                  this._rotation.set(nearestUpright);
+                  this._accumulatedRotation = nearestUpright;
+                  this._previousAngle = nearestUpright % 360;
+                  this._rotationTimeoutId = null;
+                  return GLib.SOURCE_REMOVE;
+                });
+              }
+            } else {
+              // Subtle Banking Tilt (clamped to max ±maxAngle, NO 360 spinning)
+              const tiltFactor = 10.0;
+              const targetTilt = Math.max(-maxAngle, Math.min(maxAngle, vx * tiltFactor));
+              this._rotation.set(targetTilt);
+
+              if (this._rotationTimeoutId !== null) {
+                GLib.Source.remove(this._rotationTimeoutId);
+                this._rotationTimeoutId = null;
+              }
+
+              if (this._rotateResetOnStop) {
+                this._rotationTimeoutId = GLib.timeout_add(GLib.PRIORITY_DEFAULT, 120, () => {
+                  this._rotation.set(0);
+                  this._rotationTimeoutId = null;
+                  return GLib.SOURCE_REMOVE;
+                });
+              }
             }
           }
         } else {
@@ -298,7 +332,11 @@ export default class SmoothCursorExtension extends Extension {
     const curRot = this._rotation.update(dt);
     const curScale = this._scale.update(dt);
 
-    this._cursorActor.set_position(curX, curY);
+    const cursorSize = this._cursorActor.icon_size || 50;
+    const posX = this._isCenterHotspot ? curX - cursorSize / 2 : curX;
+    const posY = this._isCenterHotspot ? curY - cursorSize / 2 : curY;
+
+    this._cursorActor.set_position(posX, posY);
     this._cursorActor.rotation_angle_z = curRot;
     this._cursorActor.scale_x = curScale;
     this._cursorActor.scale_y = curScale;
